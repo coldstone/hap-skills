@@ -27,7 +27,13 @@ hap auth whoami          # 确认已登录、查看当前用户与组织
 
 ### 方式一：用 `npx skills`（推荐）
 
-按需安装其中某个技能：
+一次性安装全部技能：
+
+```bash
+npx skills add coldstone/hap-skills
+```
+
+或按需安装其中某个技能：
 
 ```bash
 npx skills add coldstone/hap-skills --skill hap-cli
