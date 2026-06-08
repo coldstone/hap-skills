@@ -267,6 +267,15 @@ def _reference_checks(doc: Any) -> list[str]:
     for v in doc.get("views") or []:
         if isinstance(v, dict) and v.get("worksheet") and v.get("name"):
             views_by_ws.setdefault(v["worksheet"], set()).add(v["name"])
+    # custom-action names defined per worksheet (a view surfaces its own
+    # worksheet's actions via view.actions; checked below). In the split-
+    # generation flow the views part and the custom_actions part are authored
+    # by different parallel sub-agents, so this catches a naming drift between
+    # them at merge/validate time (before build).
+    actions_by_ws: dict[str, set] = {}
+    for ca in doc.get("custom_actions") or []:
+        if isinstance(ca, dict) and ca.get("worksheet") and ca.get("name"):
+            actions_by_ws.setdefault(ca["worksheet"], set()).add(ca["name"])
 
     # field index per worksheet: name -> field dict. Includes the synthesized
     # reverse two_way relation columns (which live on the *target* worksheet
@@ -401,6 +410,15 @@ def _reference_checks(doc: Any) -> list[str]:
                 chk_field(f"{w}.card.display_fields", vws, cf)
         for fl in v.get("filter_list") or []:
             chk_field(f"{w}.filter_list", vws, fl)
+        # actions surfaced on the view must be custom actions defined on THIS
+        # view's worksheet (lenient: only flagged when the worksheet has any
+        # custom action defined — so a views-only fragment doesn't false-flag).
+        defined_actions = actions_by_ws.get(vws)
+        for an in v.get("actions") or []:
+            if defined_actions and an not in defined_actions:
+                errors.append(
+                    f"{w}.actions: custom action {an!r} not defined for "
+                    f"worksheet {vws!r} (defined: {sorted(defined_actions)})")
 
     for ca in doc.get("custom_actions") or []:
         if isinstance(ca, dict) and ca.get("worksheet") and ca["worksheet"] not in ws_names:

@@ -703,6 +703,42 @@ def test_view_role_field_references() -> None:
     assert ok == [], ok
 
 
+def test_view_actions_reference() -> None:
+    """A view.actions entry must name a custom_action defined on that view's
+    worksheet. This catches a naming drift between the (parallel-authored)
+    views part and custom_actions part at merge/validate time, BEFORE build.
+    Lenient: a views-only fragment (no custom_actions at all) is NOT flagged.
+    """
+    base = {"app": {"name": "X"}, "worksheets": [
+        {"name": "图书", "fields": [
+            {"type": "Text", "name": "书名", "is_title": True}]}]}
+
+    # views-only fragment: no custom_actions defined -> NOT flagged (isolation)
+    frag = dict(base, views=[{"worksheet": "图书", "name": "全部",
+                              "view_type": "table", "actions": ["归还"]}])
+    assert not any("actions" in e and "归还" in e for e in _vd(frag)), \
+        "views-only fragment must not false-flag a missing action"
+
+    # merged: worksheet HAS actions but the view references a wrong name -> flag
+    bad = dict(base,
+               custom_actions=[{"worksheet": "图书", "name": "归还书籍",
+                                "type": "update_record",
+                                "update_fields": ["书名"]}],
+               views=[{"worksheet": "图书", "name": "全部", "view_type": "table",
+                       "actions": ["归还"]}])  # typo: 归还 vs 归还书籍
+    e = _vd(bad)
+    assert any("actions" in x and "归还" in x for x in e), e
+
+    # merged + matching name -> clean
+    good = dict(base,
+                custom_actions=[{"worksheet": "图书", "name": "归还",
+                                 "type": "update_record",
+                                 "update_fields": ["书名"]}],
+                views=[{"worksheet": "图书", "name": "全部", "view_type": "table",
+                        "actions": ["归还"]}])
+    assert _vd(good) == [], _vd(good)
+
+
 def test_embedded_view_reference() -> None:
     """A custom-page embedded view must name a view defined for that
     worksheet (BUILD-10). Referencing the default '全部' when the worksheet
@@ -993,7 +1029,7 @@ def main() -> int:
              test_seed_self_relation_tree,
              test_workflow_dsl, test_workflow_schema, test_filter_field_map,
              test_ranking_sort_and_limit, test_embedded_view_reference,
-             test_view_role_field_references,
+             test_view_role_field_references, test_view_actions_reference,
              test_merge_designs, test_filter_extensions, test_schema_extensions,
              test_workflow_formula_refs,
              test_report_three_state, test_partial_step_failure_carries_id]
