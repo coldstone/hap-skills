@@ -61,7 +61,7 @@ def render_markdown(summary: RunSummary, *, ts: str = "", design: str = "") -> s
             )
         lines.append("")
 
-    # failures-to-repair section — the actionable hand-off to hap-app-editor.
+    # failures-to-repair section — the actionable hand-off to hap-cli-app-editor.
     failures = _needs_repair(summary.records)
     lines.append("## 需修复项 (failures to repair)")
     lines.append("")
@@ -70,7 +70,7 @@ def render_markdown(summary: RunSummary, *, ts: str = "", design: str = "") -> s
         lines.append("")
     else:
         lines.append(
-            "下列元素未完全建成。**在原位按真实 id 修复（用 hap-app-editor），"
+            "下列元素未完全建成。**在原位按真实 id 修复（用 hap-cli-app-editor），"
             "不要重跑 build。** ⚠️ = 已创建但配置/发布失败（带 id，可原位修）；"
             "❌ = 未建成；⏭️ = 因上游失败被跳过。")
         lines.append("")

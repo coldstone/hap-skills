@@ -7,7 +7,7 @@
 
 ## application（应用级元数据）
 - `app.update` — `{[name], [desc], [icon_color], [nav_color], [pc_nav_style]}`（编辑当前 app）
-> 整应用从零创建是 hap-app-creator 的职责；此处只改已存在的应用。
+> 整应用从零创建是 hap-cli-app-creator 的职责；此处只改已存在的应用。
 
 ## section（侧边栏分组）
 - `section.add` — `{name}`

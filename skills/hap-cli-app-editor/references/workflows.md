@@ -20,7 +20,7 @@
 - `node.rename` — `{workflow, node:"<名|id>", name}`
 - `node.delete` — `{workflow, node:"<名|id>", confirm:true}`（后端自动重连）
 
-> **修建到一半的工作流（hap-app-creator 失败项）的推荐姿势**：流程进程已存在（清单里带 processId），
+> **修建到一半的工作流（hap-cli-app-creator 失败项）的推荐姿势**：流程进程已存在（清单里带 processId），
 > 不要重建。按情况原位修：
 > - 仅"未发布" → `workflow.publish`。
 > - 某个节点配置写错（通知收件人/审批人/字段映射/分支条件等）→ `node.update` 改那一个节点。
@@ -28,4 +28,4 @@
 >   `node.update` 配好、最后 `workflow.publish`。
 >
 > **不在范围内**：中间插入到分支内部、复杂分支拓扑的重排——这类需要精确控制连接关系，
-> 用 hap-app-creator 重建，或录制真实 payload 后用 `hap workflow node batch-add` 还原。
+> 用 hap-cli-app-creator 重建，或录制真实 payload 后用 `hap workflow node batch-add` 还原。

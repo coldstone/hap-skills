@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "hap-app-editor edit-spec envelope",
+  "title": "hap-cli-app-editor edit-spec envelope",
   "description": "Top-level edit-spec shape. Deep per-op validation is dispatched to the matching module schema by the op.type prefix (e.g. 'field.add' -> field.schema.json). Keep this file to the envelope + the shared op fields only; never inline element-specific op schemas here (decision #9 — schemas are split per module).",
   "type": "object",
   "required": ["app", "ops"],

@@ -1,7 +1,7 @@
-"""hap-app-editor — fine-grained CRUD over individual HAP elements.
+"""hap-cli-app-editor — fine-grained CRUD over individual HAP elements.
 
 This package is fully self-contained and shares no code with the
-hap-app-creator skill, so the two skills can be distributed
+hap-cli-app-creator skill, so the two skills can be distributed
 independently. It drives the installed ``hap`` CLI to read an app's live
 structure, then applies a structured *edit-spec* (validate -> plan ->
 apply) against single elements (worksheets, fields, views, roles,

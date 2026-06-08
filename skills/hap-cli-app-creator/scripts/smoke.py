@@ -32,7 +32,7 @@ def main(argv: list[str] | None = None) -> int:
     # A build is always a full, single end-to-end run from a clean design:
     # there is deliberately no phase-window / resume option. A mid-run failure
     # is recorded and the run continues to the end; broken elements are fixed
-    # in place afterwards with the hap-app-editor skill, never by re-running a
+    # in place afterwards with the hap-cli-app-editor skill, never by re-running a
     # build phase (which would pile up duplicate views / workflows).
     p.add_argument("design", nargs="*",
                    help="design doc(s); multiple are merged into one before build")

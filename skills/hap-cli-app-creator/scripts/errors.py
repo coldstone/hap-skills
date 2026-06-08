@@ -54,7 +54,7 @@ class PartialStepFailure(LiveTestError):
 
     Carries the real ``created_id`` of the already-created entity so the run
     report can mark the step as "created but not finished" (⚠️) and surface
-    the id — enabling an in-place repair (via hap-app-editor) that targets the
+    the id — enabling an in-place repair (via hap-cli-app-editor) that targets the
     existing entity instead of rebuilding it.
     """
 

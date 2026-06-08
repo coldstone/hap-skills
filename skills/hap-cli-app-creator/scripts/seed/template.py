@@ -1,6 +1,6 @@
 """Build a deterministic *fill template* from an app's captured controls.
 
-Store-native adaptation of the hap-app-creator skill's
+Store-native adaptation of the hap-cli-app-creator skill's
 ``generate_fill_templates.py``. Differences from that script:
 
 * the store keeps the server's **integer** control ``type`` (not the

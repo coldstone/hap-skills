@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "workflow node ops",
-  "description": "Deep schema for op.type starting with 'node.' — workflow node ops: append a node after another (the backend rewires connections), update an existing node's full config in place, rename, delete. Mid-branch insertion / complex topology rewiring is out of scope (use hap-app-creator or a recorded payload).",
+  "description": "Deep schema for op.type starting with 'node.' — workflow node ops: append a node after another (the backend rewires connections), update an existing node's full config in place, rename, delete. Mid-branch insertion / complex topology rewiring is out of scope (use hap-cli-app-creator or a recorded payload).",
   "oneOf": [
     { "$ref": "#/$defs/add" },
     { "$ref": "#/$defs/update" },

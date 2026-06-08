@@ -5,7 +5,7 @@ For data-bound widgets (chart/view/filter/button) that need resolved ids
 or nested config, pass the wire object under ``raw`` (merged last, wins).
 
 Wire shape mirrors pd-openweb ``src/pages/customPage/util.js`` and the
-hap-app-creator component builders: a widget carries ``type`` (int),
+hap-cli-app-creator component builders: a widget carries ``type`` (int),
 ``value``/config, ``name``, and per-platform ``web``/``mobile`` blocks
 holding the grid ``layout`` (48-col).
 """

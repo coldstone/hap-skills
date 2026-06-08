@@ -1,6 +1,6 @@
 ---
-name: hap-data-query
-description: 用 hap 命令行查询/筛选/统计明道云 HAP 工作表里的业务数据时用本 skill——尤其当筛选条件复杂、需要多条件 AND/OR、嵌套分组，或要做透视表聚合统计（求和/计数/平均/分组维度）。覆盖 `hap worksheet record list`（带筛选/排序/分页的记录查询）、`record pivot`（透视聚合）、`record bottom-stats`（底部汇总）、`worksheet chart`（图表）。只要用户说「查某张表里满足…条件的记录」「按状态/日期筛选数据」「这个筛选器怎么写」「统计每个月/每个分类的合计」「做个透视/汇总」「filter-json 报错/查不出来」，即使没明说工具名也应触发。不用于：写入数据（增删改记录用 record create/update）、建表建字段（用 hap-app-creator / hap-app-editor）。
+name: hap-cli-data-query
+description: 用 hap 命令行查询/筛选/统计明道云 HAP 工作表里的业务数据时用本 skill——尤其当筛选条件复杂、需要多条件 AND/OR、嵌套分组，或要做透视表聚合统计（求和/计数/平均/分组维度）。覆盖 `hap worksheet record list`（带筛选/排序/分页的记录查询）、`record pivot`（透视聚合）、`record bottom-stats`（底部汇总）、`worksheet chart`（图表）。只要用户说「查某张表里满足…条件的记录」「按状态/日期筛选数据」「这个筛选器怎么写」「统计每个月/每个分类的合计」「做个透视/汇总」「filter-json 报错/查不出来」，即使没明说工具名也应触发。不用于：写入数据（增删改记录用 record create/update）、建表建字段（用 hap-cli-app-creator / hap-cli-app-editor）。
 ---
 
 # HAP 数据查询助手（筛选 · 透视 · 统计）
@@ -218,7 +218,7 @@ hap worksheet record pivot WORKSHEET_ID \
 ## bottom-stats 与 chart（次要）
 
 - **`record bottom-stats`**：只返回视图底部那一行汇总（不是多维透视）。它走的是**另一套老格式**：`--column-rpts '[{"controlId":"amount","rptType":1}]'`（rptType 是整数，按 `--help` 确认对应关系），`--filter-controls` 用主站 wire 结构而非 filter-json。需要真正的分组统计时优先用 `record pivot`。
-- **`worksheet chart`**：在工作表上**建一个图表配置**（不是即时取数）。用 `--report-type`（整数图表类型）+ `--spec-json`（含 xaxes/yaxisList/filter 等）。建图表多数时候属于"改应用"，可交给 hap-app-editor；纯取数分析用 `record pivot` 更直接。
+- **`worksheet chart`**：在工作表上**建一个图表配置**（不是即时取数）。用 `--report-type`（整数图表类型）+ `--spec-json`（含 xaxes/yaxisList/filter 等）。建图表多数时候属于"改应用"，可交给 hap-cli-app-editor；纯取数分析用 `record pivot` 更直接。
 
 先看 `hap worksheet record bottom-stats --help` / `hap worksheet chart --help` 再用。
 
