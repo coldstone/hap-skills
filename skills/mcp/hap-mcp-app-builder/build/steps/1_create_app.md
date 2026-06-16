@@ -78,12 +78,12 @@
 
 ## 写入应用访问链接
 
-拼接应用链接 `https://sandbox.mingdao.com/app/{appId}`，在 `{PROJECT_ROOT}/apps/{appName}/overview.md` 文件的最顶端（第 1 行）追加写入链接卡片：
+拼接应用链接 `https://www.mingdao.com/app/{appId}`，在 `{PROJECT_ROOT}/apps/{appName}/overview.md` 文件的最顶端（第 1 行）追加写入链接卡片：
 
 ```markdown
 > [!TIP]
 > **🎉 应用已物理创建成功！**
-> **访问链接**：[点击此处立即进入系统 ➔](https://sandbox.mingdao.com/app/{appId})
+> **访问链接**：[点击此处立即进入系统 ➔](https://www.mingdao.com/app/{appId})
 
 ---
 ```

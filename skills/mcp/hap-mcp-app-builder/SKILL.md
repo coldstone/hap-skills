@@ -9,23 +9,23 @@ description: 全自动一站式 HAP 应用构建器。从业务方案设计（Pl
 
 ## 前置依赖
 
-- **MCP Server**：本构建器需要连接到明道云**沙箱环境** `https://api3.mingdao.com/mcp` 的 MCP 服务。
+- **MCP Server**：本构建器需要连接到明道云 `https://api.mingdao.com/mcp` 的 MCP 服务。
   
-  > 因部分接口仅沙箱可用，暂时仅支持 `api3.mingdao.com/mcp` 进行应用搭建。
+  > 暂时仅支持 `api.mingdao.com/mcp` 进行应用搭建。
   > **严禁调用连接到其他环境（如 `api2.mingdao.com`）的 MCP 服务**，以防止脏数据。
 
 ## 前置检查
 
-### 1. 沙箱服务自检（硬性阻断点）
+### 1. MCP 服务自检（硬性阻断点）
 
-AI 必须首先尝试调用连接到 `api3.mingdao.com` 的 MCP 服务中的 `get_time` 工具来验证沙箱连通性（推荐服务名为 `mingdaoSandbox`，但不强制）：
+AI 必须首先尝试调用连接到 `api.mingdao.com` 的 MCP 服务中的 `get_time` 工具来验证连通性（推荐服务名为 `mingdao`，但不强制）：
 
 - **调用成功（返回时间）** ➔ 记住该 MCP 服务名称，后续所有调用使用该服务。自动继续下一步
 - **调用失败 / 工具不存在 / 超时** ➔ 向用户输出以下停止卡片，**严禁执行任何其他操作**：
   ```markdown
-  🚨 **未检测到明道云沙箱 MCP 服务！**
-  应用搭建需要连接到明道云沙箱环境的 MCP 服务。
-  **解决办法**：请配置连接到 `https://api3.mingdao.com/mcp` 的 MCP 服务，配置完成后重新运行。
+  🚨 **未检测到明道云 MCP 服务！**
+  应用搭建需要连接到明道云 MCP 服务。
+  **解决办法**：请配置连接到 `https://api.mingdao.com/mcp` 的 MCP 服务，配置完成后重新运行。
   ```
 
 ### 2. 确定项目根目录（PROJECT_ROOT）

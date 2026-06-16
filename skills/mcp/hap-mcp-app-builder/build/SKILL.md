@@ -160,7 +160,7 @@ Step 10（系统工作流）和 Step 11（自定义动作工作流）均依赖 S
 5. 如需字段信息，从 worksheetContext.json 读取（只读）
 6. 如步骤文件要求运行脚本（如 generate_fill_templates.py），使用 `{SKILL_DIR}` 定位脚本路径
 7. 严格按步骤文件中的规则执行所有操作
-8. 所有 MCP 调用必须使用连接到 `api3.mingdao.com` 沙箱环境的 MCP 服务
+8. 所有 MCP 调用必须使用连接到 `api.mingdao.com` 的 MCP 服务
 9. 完成后更新 hap-context.json（仅写入产出的 ID 映射，不写 progress）
 10. 验证步骤文件末尾的 ⛔ 验证断言全部通过
 ```

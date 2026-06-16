@@ -3,7 +3,7 @@
 一组面向 **明道云 HAP（MingDAO HAP）** 的 AI Agent 技能（Skill）集合，覆盖三种操作明道云的方式：
 
 - **CLI** — 基于 `hap` 命令行，让 Agent 在终端里直接建应用、改应用、查数据；
-- **MCP** — 基于明道云沙箱 MCP 服务，对话式全自动搭建应用；
+- **MCP** — 基于明道云 MCP 服务，对话式配置连接并全自动搭建应用；
 - **API** — 基于 HAP V3 HTTP 接口，做数据接口调用、用 HAP 当后端搭网站、开发自定义视图插件。
 
 技能按场景分目录存放（`skills/cli/`、`skills/mcp/`、`skills/api/`），可以整组安装，也可以单装。
@@ -19,6 +19,7 @@
 | CLI | **hap-cli-app-editor** | 对**已有应用**做精确的局部修改（字段/视图/工作表/角色权限/工作流/自定义动作/页面） |
 | CLI | **hap-cli-data-query** | 复杂查数：多条件 AND/OR 筛选、嵌套分组、透视聚合统计（求和/计数/平均/分组） |
 | CLI | **hap-cli-environments** | 多环境/多账号操作守则：授权了多个 HAP 环境或账号时，决定在哪个环境/账号上执行，破坏性操作前先确认 |
+| MCP | **hap-mcp-usage** | 自动为 9 种 AI 工具配置 HAP MCP 连接（识别 HAP-Appkey/HAP-Sign），并验证连通性 |
 | MCP | **hap-mcp-app-builder** | 全自动一站式应用构建器：方案设计（Plan）→ 确认 → 自动物理搭建（Build），支持中断后一键续建 |
 | API | **hap-api-v3** | HAP V3 接口实操：鉴权（Appkey/Sign）、筛选器、查询与增删改等数据操作 |
 | API | **hap-api-as-database** | 把 HAP 当后台数据库做前后端分离建站的总览入口（企业官网/内容管理系统） |
@@ -37,7 +38,7 @@ hap auth login           # 浏览器授权登录
 hap auth whoami          # 确认已登录、查看当前用户与组织
 ```
 
-**MCP 场景** —— 在你的 Agent 客户端里配置明道云沙箱 MCP 服务（`api3.mingdao.com/mcp`），技能会通过 MCP 直接操作明道云。
+**MCP 场景** —— 在你的 Agent 客户端里配置明道云 MCP 服务（`api.mingdao.com/mcp`）。可直接用 `hap-mcp-usage` 技能自动完成 9 种 AI 工具的 MCP 配置与连通性验证。
 
 **API 场景** —— 准备好目标 HAP 应用的 V3 鉴权密钥（Appkey / Sign）。若已配置了 HAP MCP，部分技能可自动从 MCP 配置中提取密钥。
 
@@ -72,6 +73,7 @@ npx skills add mingdaocom/hap-skills --skill hap-cli-app-editor
 npx skills add mingdaocom/hap-skills --skill hap-cli-data-query
 npx skills add mingdaocom/hap-skills --skill hap-cli-environments
 # MCP
+npx skills add mingdaocom/hap-skills --skill hap-mcp-usage
 npx skills add mingdaocom/hap-skills --skill hap-mcp-app-builder
 # API
 npx skills add mingdaocom/hap-skills --skill hap-api-v3
@@ -86,6 +88,12 @@ npx skills add mingdaocom/hap-skills --skill hap-api-view-plugin
 
 ```text
 帮我安装这个skills: https://github.com/mingdaocom/hap-skills
+```
+
+只想装某一类场景，把场景目录说清楚即可，例如：
+
+```text
+帮我安装 https://github.com/mingdaocom/hap-skills/tree/main/skills/mcp 下的所有 skills
 ```
 
 Agent 会自动克隆仓库并把技能装到对应位置。
@@ -114,7 +122,11 @@ Agent 会自动克隆仓库并把技能装到对应位置。
 
 当你授权了多个 HAP 环境或账号（MingDAO SaaS、Nocoly、私有部署，或同一环境下多个账号）时，帮你决定「在哪个环境、用哪个账号执行」：把你的措辞匹配到具体环境/账号，破坏性操作（删除、发布、改权限）若环境不明确就先停下来确认，避免在不该动的环境上造成不可逆后果。
 
-### MCP 场景（基于沙箱 MCP 服务）
+### MCP 场景（基于 MCP 服务）
+
+#### hap-mcp-usage — MCP 配置助手
+
+适合「把 HAP 的 MCP 连接配起来」：自动为 9 种 AI 工具（Claude Code、Cursor 等）写入 HAP MCP 配置，识别包含 `HAP-Appkey` / `HAP-Sign` 的连接信息，配置完成后自动验证连通性。通常先用它配好 MCP，再用下面的构建器。
 
 #### hap-mcp-app-builder — 全自动应用构建器
 
@@ -148,6 +160,7 @@ Agent 会自动克隆仓库并把技能装到对应位置。
 查一下某张表上个月各产品的销售额前 5        # → hap-cli-data-query
 切到我测试用的那个环境再操作                # → hap-cli-environments
 hap 命令行怎么登录、有哪些命令              # → hap-cli
+帮我配置 HAP 的 MCP 连接                     # → hap-mcp-usage
 帮我全自动搭建一个客户管理应用              # → hap-mcp-app-builder
 用 HAP V3 接口查一下某张表的数据            # → hap-api-v3
 用 HAP 做一个企业官网、前后端分离           # → hap-api-as-database / hap-api-frontend-project
@@ -167,7 +180,8 @@ hap-skills/
     │   ├── hap-cli-app-editor/
     │   ├── hap-cli-data-query/
     │   └── hap-cli-environments/
-    ├── mcp/                     # MCP 场景：基于沙箱 MCP 服务
+    ├── mcp/                     # MCP 场景：基于 MCP 服务
+    │   ├── hap-mcp-usage/
     │   └── hap-mcp-app-builder/
     └── api/                     # API 场景：基于 HAP V3 HTTP 接口
         ├── hap-api-v3/
@@ -177,12 +191,3 @@ hap-skills/
 ```
 
 每个技能目录下的 `SKILL.md` 是入口，Agent 会自动读取。
-
-## 许可与来源
-
-本仓库自有技能（`skills/cli/*`）采用 MIT 许可。以下技能来自第三方，版权归原作者所有：
-
-| 技能 | 来源 |
-| --- | --- |
-| `skills/mcp/hap-mcp-app-builder` | [xuezongm/hap-app-builder](https://github.com/xuezongm/hap-app-builder)（MIT，许可证随附于该目录） |
-| `skills/api/hap-api-v3`、`hap-api-as-database`、`hap-api-frontend-project`、`hap-api-view-plugin` | [garfield-bb/hap-skills-collection](https://github.com/garfield-bb/hap-skills-collection) |

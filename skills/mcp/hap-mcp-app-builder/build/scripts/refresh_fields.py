@@ -20,7 +20,7 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
-API_BASE = "https://api3.mingdao.com"
+API_BASE = "https://api.mingdao.com"
 
 
 def fetch_worksheet_structure(worksheet_id, token, app_id):
